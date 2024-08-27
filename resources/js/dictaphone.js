@@ -92,6 +92,21 @@ window.listen = function( $wire,record, stop, sound, canvas, mainSection ){
       
               clipLabel.onclick = renameAction;
       
+              $wire.upload("recordingBlob",blob,(uploadedFilename) => {
+                // Success callback...
+                console.log("successfully uploaded blob!");
+              }, (e) => {
+                // Error callback...
+                console.log("error in uploading blob!");
+                console.log(e)
+              }, (event) => {
+                // Progress...
+                console.log("uploading blob...");
+              }, () => {
+                // Cancelled...
+                console.log('cancelled blob upload!');
+              });
+
               /*let response = await fetch("/audio/" + encodeURI(clipLabel.textContent), {
                 method: "PUT",
                 body: blob,
