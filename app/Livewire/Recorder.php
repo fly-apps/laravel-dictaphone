@@ -8,14 +8,9 @@ use Livewire\WithFileUploads;
 class Recorder extends Component
 {
     use WithFileUploads;
-    public $recordingName;
-
-    
+  
     public $recordingBlob;
-
-    public function mount()
-    {
-    }
+    public $recordingName;
 
     public function render()
     {
