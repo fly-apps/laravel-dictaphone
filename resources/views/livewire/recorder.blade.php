@@ -7,7 +7,6 @@
         </div>
     </section>
 
-    <input type="file"  />
     <section class="sound-clips">
         <article class="clip">
               <audio controls="" src="/audio/<%- encodeURI(clip.name) %>" preload="none"></audio>

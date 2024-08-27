@@ -45,33 +45,21 @@ window.connect = function( $wire,record, stop, soundClips, canvas, mainSection, 
     
           mediaRecorder.onstop = async function (e) {
             console.log("Last data to read (after MediaRecorder.stop() called).");
-    
+
+            const blob = new Blob(chunks, { type:chunks[0].type });
+
+            // File Name to Save
             const clipName = prompt(
               "Enter a name for your sound clip?",
               "My unnamed clip"
             );
-    
-            const clipContainer = document.createElement("article");
-            const clipLabel = document.createElement("p");
-            const audio = document.createElement("audio");
-            const deleteButton = document.createElement("button");
-    
-            clipContainer.classList.add("clip");
-            audio.setAttribute("controls", "");
-            deleteButton.textContent = "Delete";
-            deleteButton.className = "delete";
-    
-            if (clipName === null) {
-              clipLabel.textContent = "My unnamed clip";
-            } else {
-              clipLabel.textContent = clipName;
-            }
-    
-            audio.controls = true;
-            const blob = new Blob(chunks, { type:chunks[0].type });
-            let file = new File([blob], clipName+'.mp4');
+            let fileName =  clipName+'.mp4';
+            let file = new File([blob], fileName);
 
-            $wire.upload("recordingBlob",file,(uploadedFilename) => {
+            // Update the filename in local javascript( will be sent up alongside the upload below )
+            $wire.set("recordingName",fileName);
+            // Upload the file
+            $wire.upload("recordingFile",file,(uploadedFilename) => {
               // Success callback...
               console.log("successfully uploaded blob!");
             }, (e) => {
@@ -85,15 +73,6 @@ window.connect = function( $wire,record, stop, soundClips, canvas, mainSection, 
               // Cancelled...
               console.log('cancelled blob upload!');
             });
-
-            /*let response = await fetch("/audio/" + encodeURI(clipLabel.textContent), {
-              method: "PUT",
-              body: blob,
-              headers: {
-                "Content-Type": mediaRecorder.mimeType,
-              }
-            });*/
-    
           };
     
           mediaRecorder.ondataavailable = function (e) {
@@ -106,9 +85,8 @@ window.connect = function( $wire,record, stop, soundClips, canvas, mainSection, 
       };
 
       navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
-
   }else{
-      
+    alert("MediaDevices.getUserMedia() not supported on your browser!");
   }
 
   function visualize(stream) {
