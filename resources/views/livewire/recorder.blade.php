@@ -8,12 +8,11 @@
     </section>
 
     <section class="sound-clips">
-        <article class="clip">
-              <audio controls="" src="/audio/<%- encodeURI(clip.name) %>" preload="none"></audio>
-              <p>Test</p>
-              <button class="delete">Delete</button>
-              <p class="text">Description</p>
-        </article>
+        @foreach( $recordingList as $record )
+          <livewire:recording 
+            :record=$record 
+            wire:key="{{ $record['name'] }}"/>
+        @endforeach
     </section>
 
     @asset
@@ -30,9 +29,7 @@
         document.querySelector(".visualizer"),
         document.querySelector(".main-controls"),
         document.querySelector('input[type="file"]')
-       );
-      
-       
+      );
     </script>
     @endscript
 </div>
