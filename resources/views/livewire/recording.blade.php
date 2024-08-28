@@ -10,7 +10,7 @@
         $wire.on('prompt-update',(event)=>{
             const newClipName = prompt('Enter a new name for your sound clip?');
             if (newClipName === null || newClipName === "") {
-                console.log('oks');
+                console.log('No Change!');
             } else {
                 $wire.updateName(newClipName);
             }
