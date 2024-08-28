@@ -42,4 +42,21 @@ class Clip extends Model
       }
     }
 
+    public function reNameClip( $newName ): string
+    {
+      $oldName = $this->name;
+      try{
+        $filePath = env('CLIPS_DIRECTORY').'/'.$this->name;
+        $newFilePath = env('CLIPS_DIRECTORY').'/'.$newName;
+
+        // This is essentially renaming!
+        Storage::disk('s3')->move($filePath, $newFilePath);
+        Clip::where('name', $this->name)->update(['name'=>$newName]);
+        return $newName;
+      }catch(\Exception $e){
+        
+        return $oldName;
+      }
+    }
+
 }
