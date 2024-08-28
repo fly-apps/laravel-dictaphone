@@ -21,14 +21,25 @@ class Clip extends Model
       'text'
     ];
 
-    public function getAsArrayItem(){
-        $filePath = env('CLIPS_DIRECTORY').'/'.$this->name;
-
-        return [
-            'name' => $this->name,
-            'uri'  => Storage::disk('s3')->temporaryUrl(
-                $filePath, now()->addMinutes(60)
-            )
-        ];
+    public function getUri()
+    {
+      $filePath = env('CLIPS_DIRECTORY').'/'.$this->name;
+      return  Storage::disk('s3')->temporaryUrl(
+          $filePath, now()->addMinutes(60)
+      );
     }
+
+    public function deleteClip(): bool
+    {
+      try{
+        $filePath = env('CLIPS_DIRECTORY').'/'.$this->name;
+        Storage::disk('s3')->delete($filePath);
+        Clip::where('name', $this->name)->delete();
+        return true;
+      }catch(\Exception $e){
+        dd( $e );
+        return false;
+      }
+    }
+
 }

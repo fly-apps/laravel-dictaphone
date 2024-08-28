@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Clip;
+use Livewire\Attributes\On;
 
 use Log;
 
@@ -19,12 +20,13 @@ class Recorder extends Component
 
     public function mount()
     {
-        $clips = Clip::all();
-        $this->recordingList = [];
-        foreach( $clips as $clip ){
-            //  clip name, plus the s3 link into an array
-            $this->recordingList[] = $clip->getAsArrayItem();
-        }
+        $this->refreshList();
+    }
+
+    #[On('clip-deleted')] 
+    public function refreshList()
+    {
+        $this->recordingList = Clip::all();
     }
 
     public function updatedRecordingFile(){
@@ -39,8 +41,10 @@ class Recorder extends Component
         );
 
         // Add this new clip to the view's recording list 
-        $this->recordingList[] = $clip->getAsArrayItem();
+        $this->recordingList->push( $clip );
     }
+
+   
 
     public function render()
     {

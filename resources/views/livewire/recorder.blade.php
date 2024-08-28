@@ -10,8 +10,8 @@
     <section class="sound-clips">
         @foreach( $recordingList as $record )
           <livewire:recording 
-            :record=$record 
-            wire:key="{{ $record['name'] }}"/>
+            :clip=$record 
+            wire:key="{{ $record->name }}"/>
         @endforeach
     </section>
 
@@ -30,6 +30,14 @@
         document.querySelector(".main-controls"),
         document.querySelector('input[type="file"]')
       );
+
+
+     /* $wire.on('clip-deleted',(event)=>{
+          console.log(event);
+          $wire.set('recordingList', event.recordingList, false);
+          console.log( $wire.recordingList);
+          $wire.$refresh();
+      });*/
     </script>
     @endscript
 </div>
