@@ -15,13 +15,11 @@
         @endforeach
     </section>
 
-    @asset
-    @vite('resources/js/dictaphone.js')
-    @endasset
-
+    @vite(['resources/js/dictaphone.js','resources/js/echo.js'])
+    
     @script
     <script>
-      // Set up basic variables for app
+      // Set up basic variables for app  
       connect( $wire,
         document.querySelector(".record"),
         document.querySelector(".stop"),
@@ -31,13 +29,26 @@
         document.querySelector('input[type="file"]')
       );
 
+      // Serves as a flag on whether to pause reaction to a clip-created event from listening to websocket clips channel
+      $pendingUpdate = false;
 
-     /* $wire.on('clip-deleted',(event)=>{
-          console.log(event);
-          $wire.set('recordingList', event.recordingList, false);
-          console.log( $wire.recordingList);
-          $wire.$refresh();
-      });*/
+      // Listen to a websocket channel tru Laravel Echo js package 
+      // Make sure to add a "." before the event name, other wise it ain't gonna listen to the event
+      Echo.channel('clips')
+      .listen('.clip-created', e => {
+        //console.log(e);
+        //console.log( @this.currentClipId );
+
+        if (document.querySelector(".record").style.backgroundColor !== "") {
+          // Pause reaction if user recording 
+          $pendingUpdate = true;
+        }else if($pendingUpdate || e.clip.id != @this.currentClipId ){
+          // Ask livewire to refresh the list it has, so that the new clip from another client can get shown
+          // @this.<LivewireComponentFunctionName> -> syntax for calling livewire func in the background, sent tru "/livewire/update" route
+          @this.refreshList();
+          $pendingUpdate = false;
+        }    
+      });
     </script>
     @endscript
 </div>
