@@ -34,6 +34,12 @@ For broadcasting events from the server to the client, this repository uses [Lar
 6. To accommodate more than one server/Fly Machine, Redis can be used to manage connections across these nodes. This is [readily accommodated](https://laravel.com/docs/11.x/reverb#scaling) by Reverb, simply set the `REVERB_SCALING_ENABLED=true`
 
 
+### TLDR;important setups needed:
+
+Two processes need to be running to allow the broadcast setup of this repository. A running queue worker, and a running Reverb server:
+1. php artisan queue:work   
+2. php artisan reverb:start 
+When running alongside a Laravel Fly app, the two processes above can be configured as Fly Processes. [See ref here!](https://fly.io/docs/laravel/the-basics/cron-and-queues/#queue-worker)
 
 ## Laravel Echo: Creating long-running websocket connection
 
@@ -48,3 +54,6 @@ The client needs to create a websocket connection. This repository uses the comm
 3. Finally, the Livewire component [view uses Echo](https://github.com/fly-apps/laravel-dictaphone/blob/master/resources/views/livewire/recorder.blade.php#L37) to subscribe to the channel 'clips', and respond to the 'clipCreated' event
  
 
+### TLDR;important setups needed:
+
+Please make sure that the Reverb credentials are detectable from a .env file. For a Laravel Fly app, please refer to this [draft superfly/docs PR](https://github.com/superfly/docs/pull/1521/files) for how to make sure that those credentials are available during Vites' bundling of the Laravel Fly app's assets.
