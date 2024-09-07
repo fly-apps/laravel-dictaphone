@@ -12,7 +12,7 @@
 
 This repository uses websocket connection for communicating realtime updates from the server to all clients connected.
 
-Specifically, the client creates a websocket connection to listen for 'clipCreated' events that are published to a 'clips' channel( published after creating a clip in the server ). Upon receiving this event, and if the clip created from the event is not the same as the lastet clip created clients connected to the server refreshes its list of clips if the event was created for a different clip from the last clip it uploaded.
+Specifically, the client creates a websocket connection to listen for 'clipCreated' events that are published to a 'clips' channel( published after creating a clip in the server ). If the clip created from the event is not the same as the lastet clip created in the current client, a client receiving the event refreshes its list of clips, allowing it to reflect changes from another client.
 
 There are two parts to this! The long-running websocket connection for realtime communication between client and server, and the broadcasting setup for publishing and subscribing to events. 
 
@@ -27,7 +27,7 @@ For broadcasting events from the server to the client, this repository uses [Lar
 
 3. Everytime a new clip is created in the Livewire component Recorder, the [ClipCreated event](https://github.com/fly-apps/laravel-dictaphone/blob/master/app/Livewire/Recorder.php#L68) is dispatched
 
-4. By default, dispatched events are sent to the queue for background processing. If so, please make sure to get a queue worker running to process these events
+4. By default, dispatched events are sent to the queue for background processing. If so, please make sure to get a **queue worker** running to process these events
 
 5. Finally, in order to fulfill its dispatch duties, the Reverb server needs to be started with the command: `php artisan reverb:start`
 
