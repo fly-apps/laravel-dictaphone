@@ -19,7 +19,7 @@ There are two parts to this! The long-running websocket connection for realtime 
 
 ## Laravel Reverb: Broadcasting
 
-For broadcasting events from the server to the client, this repository uses [Laravel Reverb](https://laravel.com/docs/11.x/broadcasting#reverb). This package can be installed directly on a Laravel application, and therefore does not require the use of any third party service outside an app. Lastly, Reverb uses the pusher.js protocol, allowing it to broadcast events to the client.
+For broadcasting events from the server to the client, this repository uses [Laravel Reverb](https://laravel.com/docs/11.x/broadcasting#reverb). This package can be installed directly on a Laravel application, and therefore does not require the use of any third party service outside an app. Reverb uses the pusher.js protocol, allowing it to broadcast events to a client setup using Laravel Echo and pusher.js.
 
 1. This repository needs .env variables setup wtih Reverb's [required custom credentials](https://laravel.com/docs/11.x/reverb#application-credentials), to authorize client and server connection. For Fly apps, please make sure to set those as secrets
 
