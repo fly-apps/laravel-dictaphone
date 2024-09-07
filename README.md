@@ -31,7 +31,7 @@ For broadcasting events from the server to the client, this repository uses [Lar
 
 5. Finally, in order to fulfill its dispatch duties, the Reverb server needs to be started with the command: `php artisan reverb:start`
 
-6. To accommodate more than one server/Fly Machine, Redis can be used to manage connections across these nodes. This is [readily accommodated](https://laravel.com/docs/11.x/reverb#scaling) by Reverb, simply set the `REVERB_SCALING_ENABLED=true`
+6. To accommodate more than one server/Fly Machine, Redis can be used to manage connections across these nodes. This is [readily accommodated](https://laravel.com/docs/11.x/reverb#scaling) by Reverb, simply set the `REVERB_SCALING_ENABLED=true` env variable
 
 
 ### TLDR;important setups needed:
