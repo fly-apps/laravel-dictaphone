@@ -43,8 +43,7 @@ When running alongside a Laravel Fly app, the two processes above can be configu
 
 ## Laravel Echo: Creating long-running websocket connection
 
-Once broadcasting has been setup in the server, client can now be configured to subscribe to the server's broadcasting. 
-The client needs to create a websocket connection. This repository uses the community favorite, [Laravel Echo](https://github.com/laravel/echo), a JavaScript library allowing the frontend to painlessly create a websocket connection that allows subscription to channels and events broadcasted by a Laravel app. We use this in coordination with the pusher.js library to listen to events published by Laravel  [Reverb](https://laravel.com/docs/11.x/broadcasting#client-reverb) setup in the server. This is possible because Reverb is compatible with pusher.js.
+Once broadcasting has been setup in the server, client can now be configured to subscribe to the server's broadcasting via a websocket connection. This repository uses the community favorite, [Laravel Echo](https://github.com/laravel/echo), a JavaScript library to allow the frontend to painlessly create a websocket connection to communication happening between channel subscription and channel events broadcasting by a Laravel app. We use this in coordination with the pusher.js library to listen to events published by Laravel  [Reverb](https://laravel.com/docs/11.x/broadcasting#client-reverb) setup in the server. This is possible because Reverb is compatible with pusher.js.
 
 1. Setup is in the [echo.js'](https://github.com/fly-apps/laravel-dictaphone/blob/master/resources/js/echo.js) file, make sure environment variables setup in the server are properly detected! For Deploying to Fly with a Vite asset bundler, you can follow this [guide](https://github.com/superfly/docs/pull/1521/files) to ensure Vite properly detects the env variables during bundling of assets.
 
