@@ -31,6 +31,12 @@ For [broadcasting](https://laravel.com/docs/10.x/broadcasting#introduction) [eve
 
 5. Finally, in order to fulfill its dispatch duties, the Reverb server needs to be started with the command: `php artisan reverb:start`,
 
+### Pre-Setup Requirements ( Fly.io Specific )
+
+Please make sure that the Laravel app uses an external database outside of the app itself. If, using the default Postgresql Fly app, please make sure to include the value of `DATABASE_URL`, as `DB_URL`! If using other database, please [refer here](https://fly.io/docs/laravel/database-guides/).
+
+Otherwise! A Fly app deployed using this repository might send a 500 error on open!
+
 ### Setup( Fly.io specific )
 
 Reverb has it's own server for providing real-time Websocket communication, and by default, dispatches events through a queue. This means two things need to be running aside from our Laravel server:
