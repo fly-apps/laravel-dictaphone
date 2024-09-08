@@ -109,7 +109,8 @@ location /app {
   queue ="php artisan queue:listen"
 ```
 
-- Finally, please make sure to update your `fly.toml` file's environment section to specify the driver that will be used by the queue listner. Ideally, you can use a Redis Fly app to do so, with the env variable `QUEUE_CONNECTION="redis"`
+- Then make sure to update your `fly.toml` file's environment section to specify the driver that will be used by the queue listner. Ideally, you can use a Redis Fly app to do so, with the env variable `QUEUE_CONNECTION="redis"`
+
 
 3. To accommodate more than one server/Fly Machine, Redis can be used to manage connections across these nodes. This is [readily accommodated](https://laravel.com/docs/11.x/reverb#scaling) by Reverb, simply set the `REVERB_SCALING_ENABLED=true` env variable
 
@@ -129,4 +130,11 @@ Once broadcasting has been setup in the server, client can now be configured to 
 
 Please make sure that the Reverb credentials are detectable from a .env file. For a Laravel Fly app, please refer to this [draft superfly/docs PR](https://github.com/superfly/docs/pull/1521/files) for how to make sure that those credentials are available during Vites' bundling of the Laravel Fly app's assets.
 
-Or! an easier way, is to create a .env.production file that contains only the VITE_ credentials needed during configuration, and! making sure that .env.production file gets included during build time. This can be done by making sure `.env.production` is not excluded using `.dockerignore` or `.gitignore`. 
+Or! an easier way, is to create a .env.production file that contains only the VITE_ credentials needed during configuration, and! making sure that .env.production file gets included during build time. This can be done by making sure `.env.production` is not excluded using `.dockerignore` or `.gitignore`:
+
+```
+VITE_REVERB_APP_KEY="..."
+VITE_APP_NAME="Laravel"
+VITE_REVERB_HOST="<FLY_APP_NAME>.fly.dev"
+VITE_REVERB_SCHEME='https'
+```
